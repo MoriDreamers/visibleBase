@@ -2,6 +2,8 @@ package jwtutil
 
 import (
 	"JWT-TEST/config"
+	"JWT-TEST/utils/logs"
+	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -18,7 +20,7 @@ type MyCustomClaims struct {
 // 2.封装生成token的方法
 func GenToken(username string) (string, error) {
 	claims := MyCustomClaims{
-		"bar",
+		username,
 		jwt.RegisteredClaims{
 			// A usual scenario is to set the expiration time relative to the current time
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * time.Duration(config.JwtExpTime))),
@@ -31,4 +33,21 @@ func GenToken(username string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	ss, err := token.SignedString(JwtSignKey) //签名并返回token字符串
 	return ss, err
+}
+
+func ParseToken(ss string) (*MyCustomClaims, error) {
+	token, err := jwt.ParseWithClaims(ss, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return JwtSignKey, nil
+	})
+	if err != nil {
+		logs.Error(nil, "解析token失败")
+		return nil, err
+	}
+	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+		return claims, nil
+	} else {
+		logs.Warning(nil, "token无效")
+		return nil, errors.New("token无效")
+	}
+
 }

@@ -13,6 +13,6 @@ func Info(fileds map[string]interface{}, msg string) {
 func Warning(fileds map[string]interface{}, msg string) {
 	logrus.WithFields(fileds).Warning(msg)
 }
-func Erorr(fileds map[string]interface{}, msg string) {
+func Error(fileds map[string]interface{}, msg string) {
 	logrus.WithFields(fileds).Error(msg)
 }
