@@ -17,11 +17,10 @@ type UserInfo struct {
 func Login(r *gin.Context) {
 	//1. 获取前端传递的用户名和密码
 	userInfo := UserInfo{}
+	returnData := config.NewReturnData()
 	if err := r.ShouldBindBodyWithJSON(&userInfo); err != nil {
-		r.JSON(200, gin.H{
-			"msg":    err.Error(),
-			"status": 401,
-		})
+		returnData.Message = err.Error()
+		r.JSON(200, returnData)
 		return
 	}
 	logs.Debug(map[string]interface{}{
@@ -47,13 +46,10 @@ func Login(r *gin.Context) {
 		//token生成成功的处理
 		logs.Info(map[string]interface{}{
 			"用户名": userInfo.Username}, "登陆成功")
-		data := make(map[string]interface{})
-		data["token"] = ss
-		r.JSON(200, gin.H{
-			"status":  200,
-			"message": "登陆成功",
-			"data":    data,
-		})
+		returnData.Message = "登陆成功"
+		returnData.Status = 200
+		returnData.Data["token"] = ss
+		r.JSON(200, returnData)
 		return
 	} else {
 		r.JSON(200, gin.H{

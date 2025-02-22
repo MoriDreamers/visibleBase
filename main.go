@@ -4,6 +4,7 @@ package main
 import (
 	"JWT-TEST/config"
 	_ "JWT-TEST/config"
+	"JWT-TEST/middlewares"
 	"JWT-TEST/routers"
 	"JWT-TEST/utils/logs"
 
@@ -14,6 +15,7 @@ func main() {
 	r := gin.Default()
 	routers.RegisterRouters(r)
 	logs.Info(nil, "开始加载程序配置")
+	r.Use(middlewares.JWTAuth)
 	/*
 		//测试jwt生成token
 		ss, err := jwtutil.GenToken("genshin")

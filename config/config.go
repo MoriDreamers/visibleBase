@@ -8,6 +8,23 @@ import (
 	"github.com/spf13/viper"
 )
 
+// 返回给前端的数据结构
+type ReturnData struct {
+	Status  int                    `json:"status"`
+	Message string                 `json:"message"`
+	Data    map[string]interface{} `json:"data"`
+}
+
+// 构造函数初始化此结构体并赋值默认值
+func NewReturnData() ReturnData {
+	returnData := ReturnData{}
+	returnData.Status = 200
+	data := make(map[string]interface{})
+	returnData.Data = data
+	returnData.Message = "你还没有配置返回信息"
+	return returnData
+}
+
 const (
 	TimeFormat string = "2006-01-02 15:04:05"
 )
