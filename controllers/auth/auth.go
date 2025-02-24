@@ -37,10 +37,9 @@ func Login(r *gin.Context) {
 				"用户名":  userInfo.Username,
 				"错误日志": err.Error()},
 				"信息正确但是生成失败！")
-			r.JSON(200, gin.H{
-				"message": "token生成失败",
-				"status":  401,
-			})
+			returnData.Message = "token生成失败"
+			returnData.Status = 401
+			r.JSON(200, returnData)
 			return
 		}
 		//token生成成功的处理
@@ -52,17 +51,17 @@ func Login(r *gin.Context) {
 		r.JSON(200, returnData)
 		return
 	} else {
-		r.JSON(200, gin.H{
-			"message": "用户名或密码错误",
-		})
+		returnData.Message = "用户名或密码错误"
+		returnData.Status = 401
+		r.JSON(200, returnData)
 	}
 
 }
 func Logout(r *gin.Context) {
 	//登出逻辑
-	r.JSON(200, gin.H{
-		"message": "登出成功",
-		"status":  200,
-	})
+	returnData := config.NewReturnData()
+	returnData.Message = "登出成功"
+	returnData.Status = 200
+	r.JSON(200, returnData)
 	logs.Debug(nil, "登出成功")
 }
