@@ -7,14 +7,26 @@ import (
 	"JWT-TEST/middlewares"
 	"JWT-TEST/routers"
 	"JWT-TEST/utils/logs"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
-	routers.RegisterRouters(r)
+
 	logs.Info(nil, "开始加载程序配置")
+	//本地调试时取消跨域想限制
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"}, // 允许的前端源
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	r.Use(middlewares.JWTAuth)
 	/*
 		//测试jwt生成token
@@ -29,5 +41,6 @@ func main() {
 			fmt.Println("解析token失败", err2.Error())
 		}
 	*/
+	routers.RegisterRouters(r)
 	r.Run(config.Port)
 }
