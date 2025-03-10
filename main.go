@@ -24,7 +24,7 @@ func main() {
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+		MaxAge:           1200 * time.Hour,
 	}))
 
 	r.Use(middlewares.JWTAuth)

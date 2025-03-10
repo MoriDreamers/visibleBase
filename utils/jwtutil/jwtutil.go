@@ -6,6 +6,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -40,13 +41,13 @@ func ParseToken(ss string) (*MyCustomClaims, error) {
 		return JwtSignKey, nil
 	})
 	if err != nil {
-		logs.Error(nil, "解析token失败")
+		logs.Error(gin.H{"err": nil, "Status": 401}, "解析token失败")
 		return nil, err
 	}
 	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
 		return claims, nil
 	} else {
-		logs.Warning(nil, "token无效")
+		logs.Warning(gin.H{"err": nil, "Status": 401}, "token无效")
 		return nil, errors.New("token无效")
 	}
 

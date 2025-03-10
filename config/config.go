@@ -16,6 +16,7 @@ type ReturnData struct {
 }
 
 // 构造函数初始化此结构体并赋值默认值
+// 我们敲定tokne有问题那么data的status==401
 func NewReturnData() ReturnData {
 	returnData := ReturnData{}
 	returnData.Status = 200
@@ -54,7 +55,8 @@ func init() {
 	viper.SetDefault("LOG_LEVEL", "debug")
 	viper.SetDefault("PORT", "8080")
 	viper.SetDefault("JWT_SIGN_KEY", "MoriDreamer")
-	viper.SetDefault("JWT_EXPIRE_TIME", "120")
+	//过期时间120000分钟，即2天
+	viper.SetDefault("JWT_EXPIRE_TIME", "120000")
 	viper.SetDefault("USERNAME", "Mori")
 	viper.SetDefault("PASSWORD", "10086")
 	viper.AutomaticEnv()
