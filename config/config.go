@@ -1,8 +1,8 @@
 package config
 
 import (
-	"JWT-TEST/utils/logs"
 	"fmt"
+	"visibleBase/utils/logs"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"

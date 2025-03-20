@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"JWT-TEST/config"
-	"JWT-TEST/utils/jwtutil"
-	"JWT-TEST/utils/logs"
+	"visibleBase/config"
+	"visibleBase/utils/jwtutil"
+	"visibleBase/utils/logs"
 
 	"github.com/gin-gonic/gin"
 )

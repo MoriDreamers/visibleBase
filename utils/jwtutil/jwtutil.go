@@ -1,10 +1,10 @@
 package jwtutil
 
 import (
-	"JWT-TEST/config"
-	"JWT-TEST/utils/logs"
 	"errors"
 	"time"
+	"visibleBase/config"
+	"visibleBase/utils/logs"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"

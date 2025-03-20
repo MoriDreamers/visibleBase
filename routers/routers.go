@@ -2,7 +2,7 @@
 package routers
 
 import (
-	"JWT-TEST/routers/auth"
+	"visibleBase/routers/auth"
 
 	"github.com/gin-gonic/gin"
 )

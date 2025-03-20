@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"JWT-TEST/controllers/auth"
 	"net/http"
 	"time"
+	"visibleBase/controllers/auth"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,12 +2,12 @@
 package main
 
 import (
-	"JWT-TEST/config"
-	_ "JWT-TEST/config"
-	"JWT-TEST/middlewares"
-	"JWT-TEST/routers"
-	"JWT-TEST/utils/logs"
 	"time"
+	"visibleBase/config"
+	_ "visibleBase/config"
+	"visibleBase/middlewares"
+	"visibleBase/routers"
+	"visibleBase/utils/logs"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
