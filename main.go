@@ -1,5 +1,5 @@
 // 项目总入口
-package main
+//package main
 
 import (
 	"time"
