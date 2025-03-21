@@ -10,6 +10,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+
+	"encoding/json"
 )
 
 func main() {
@@ -93,8 +95,8 @@ func main() {
 	// 	fmt.Println("删除DEPLOYMENT成功!")
 	// }
 
-	//创建资源
-	//创捷ns测试
+	//手动填入数值创建资源测试
+	//创建ns测试
 	var newnameSpace corev1.Namespace
 	newnameSpace.Name = "test"
 	//传递的参数是一个指针
@@ -165,4 +167,51 @@ func main() {
 		fmt.Println("创建deployment成功:", newDeployment.Name)
 	}
 
+	//使用json串来创建资源,查看所需要的json串:	kubectl create deploy redis --image=redis --dry-run=client -ojson
+	deploy := `{
+		"kind": "Deployment",
+		"apiVersion": "apps/v1",
+		"metadata": {
+			"name": "redis",
+			"creationTimestamp": null,
+			"labels": {
+				"app": "redis"
+			}
+		},
+		"spec": {
+			"replicas": 1,
+			"selector": {
+				"matchLabels": {
+					"app": "redis"
+				}
+			},
+			"template": {
+				"metadata": {
+					"creationTimestamp": null,
+					"labels": {
+						"app": "redis"
+					}
+				},
+				"spec": {
+					"containers": [
+						{
+							"name": "redis",
+							"image": "redis",
+							"resources": {}
+						}
+					]
+				}
+			},
+			"strategy": {}
+		},
+		"status": {}
+	}
+	`
+	var newDeployment2 appsv1.Deployment
+	//进行json转换yaml 把[]byte(A)赋值给B,同时B使用指针类型
+	err7 := json.Unmarshal([]byte(deploy), &newDeployment2)
+	if err7 != nil {
+		fmt.Println("json转换失败", err7.Error())
+	}
+	fmt.Println("转换后的yaml:", newDeployment2)
 }
