@@ -1,4 +1,4 @@
-package main
+package mainbak
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-func main() {
+func mainbak() {
 	// 设置 kubeconfig 路径
 	kubeconfig := "./kube/config"
 
