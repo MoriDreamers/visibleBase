@@ -36,6 +36,10 @@ var (
 	JwtExpTime int64 //jwt过期时间，单位分钟
 	Username   string
 	Password   string
+
+	//Incluster 相关配置
+	MetaDataNameSpace       string //元数据存储namespace
+	InclusterKubeConfigPath string //incluster kubeconfig路径
 )
 
 func initLogConfig(logLevel string) {
@@ -50,6 +54,7 @@ func initLogConfig(logLevel string) {
 	fmt.Println("日志初始化完成！")
 }
 
+// 只要是以init开头的函数都会在程序启动时自动执行，调包的时候也是
 func init() {
 	logs.Info(nil, "开始加载程序配置")
 	viper.SetDefault("LOG_LEVEL", "debug")
@@ -59,6 +64,7 @@ func init() {
 	viper.SetDefault("JWT_EXPIRE_TIME", "120000")
 	viper.SetDefault("USERNAME", "Mori")
 	viper.SetDefault("PASSWORD", "10086")
+	viper.SetDefault("METADATA_NAMESPACE", "visible-k8s")
 	viper.AutomaticEnv()
 	Port = ":" + viper.GetString("PORT")           //获取端口的配置
 	logLevel := viper.GetString("LOG_LEVEL")       //获取日志输出的配置
@@ -66,6 +72,7 @@ func init() {
 	JwtExpTime = viper.GetInt64("JWT_EXPIRE_TIME") //获取JWT过期时间的配置
 	Username = viper.GetString("USERNAME")
 	Password = viper.GetString("PASSWORD")
+	MetaDataNameSpace = viper.GetString("METADATA_NAMESPACE")
 	//加载日志输出格式
 	initLogConfig(logLevel)
 

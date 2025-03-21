@@ -5,6 +5,7 @@ import (
 	"time"
 	"visibleBase/config"
 	_ "visibleBase/config"
+	_ "visibleBase/controllers/initcontroller"
 	"visibleBase/middlewares"
 	"visibleBase/routers"
 	"visibleBase/utils/logs"
@@ -14,8 +15,9 @@ import (
 )
 
 func main() {
+	//初始化
+	//GIN框架初始化
 	r := gin.Default()
-
 	logs.Info(nil, "开始加载程序配置")
 	//本地调试时取消跨域想限制
 	r.Use(cors.New(cors.Config{
