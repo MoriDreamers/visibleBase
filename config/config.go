@@ -6,6 +6,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"k8s.io/client-go/kubernetes"
 )
 
 // 返回给前端的数据结构
@@ -38,8 +39,9 @@ var (
 	Password   string
 
 	//Incluster 相关配置
-	MetaDataNameSpace       string //元数据存储namespace
-	InclusterKubeConfigPath string //incluster kubeconfig路径
+	MetaDataNameSpace       string                //元数据存储namespace
+	InclusterKubeConfigPath string                //incluster kubeconfig路径
+	InClusterClinetSet      *kubernetes.Clientset //clientgo客户端工具
 )
 
 func initLogConfig(logLevel string) {

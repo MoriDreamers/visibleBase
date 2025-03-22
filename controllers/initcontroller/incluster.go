@@ -31,6 +31,7 @@ func metadataInit() {
 		log.Fatalf("创建 Kubernetes 客户端失败: %v", err)
 		panic(err.Error())
 	}
+	config.InClusterClinetSet = clientset
 	inClusterVersion, _ := clientset.Discovery().ServerVersion()
 	_, err1 := clientset.CoreV1().Namespaces().Get(context.TODO(), config.MetaDataNameSpace, metav1.GetOptions{})
 	if err1 != nil {
