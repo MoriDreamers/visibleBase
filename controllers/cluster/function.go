@@ -76,6 +76,24 @@ func Update(r *gin.Context) {
 
 func Delete(r *gin.Context) {
 	logs.Info(nil, "删除集群")
+	//接受参数
+	clusterId := r.Query("clusterId")
+	returnData := config.NewReturnData()
+	//删除
+	err := config.InClusterClinetSet.CoreV1().Secrets(config.MetaDataNameSpace).Delete(context.TODO(), clusterId, metav1.DeleteOptions{})
+	if err != nil {
+		msg := "删除集群失败" + err.Error()
+
+		returnData.Status = 401
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		logs.Error(map[string]interface{}{"集群ID": clusterId, "msg=": err.Error()}, "删除集群失败")
+		return
+	}
+	logs.Error(map[string]interface{}{"集群ID": clusterId}, "删除集群成功")
+	returnData.Status = 200
+	returnData.Message = "删除集群成功"
+	r.JSON(200, returnData)
 	return
 }
 func Get(r *gin.Context) {
