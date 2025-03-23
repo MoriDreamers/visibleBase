@@ -98,9 +98,30 @@ func Delete(r *gin.Context) {
 }
 func Get(r *gin.Context) {
 	logs.Info(nil, "获取集群")
-	return
+
 }
 func List(r *gin.Context) {
 	logs.Info(nil, "获取集群列表")
+	//根据之前打的标签进行一下筛选 避免把其他东西也返回进来
+	listOptions := metav1.ListOptions{
+		LabelSelector: "k8s.moridreamers.com/cluster.metadata=true",
+	}
+	returnData := config.NewReturnData()
+	newlist, err := config.InClusterClinetSet.CoreV1().Secrets(config.MetaDataNameSpace).List(context.TODO(), listOptions)
+	if err != nil {
+		//拉取列表失败
+		msg := "拉取列表失败" + err.Error()
+		logs.Error(map[string]interface{}{"msg:": err.Error()}, "获取集群列表失败")
+		returnData.Status = 401
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	}
+	logs.Error(map[string]interface{}{}, "获取集群列表成功")
+	returnData.Data = make(map[string]interface{})
+	returnData.Status = 200
+	returnData.Message = "获取集群列表成功"
+	returnData.Data["items"] = newlist.Items
+	r.JSON(200, returnData)
 	return
 }
