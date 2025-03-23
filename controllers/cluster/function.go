@@ -12,6 +12,8 @@ import (
 )
 
 func Add(r *gin.Context) {
+	//首先接收参数，绑定到clusterConfig结构体中，接着使用内嵌方法检测是否可用，如果可用那么返回一个clusteStatus其中包含anntions的必要字段，
+	//将其转成json格式放置到clusterConfigSecrt中，然后通过slientgo客户端工具更新集群中的secret
 	logs.Info(nil, "添加集群")
 	clusterConfig := ClusterConfig{}
 	returnData := config.NewReturnData() //初始化返回数据
@@ -121,7 +123,22 @@ func List(r *gin.Context) {
 	returnData.Data = make(map[string]interface{})
 	returnData.Status = 200
 	returnData.Message = "获取集群列表成功"
-	returnData.Data["items"] = newlist.Items
+	//返回的数据太多，so 这里只返回部分信息
+	var clusterList []map[string]string
+	for _, item := range newlist.Items {
+		annos := item.Annotations
+		clusterList = append(clusterList, annos)
+	}
+	//写BUG了 这样便利出来的不是数组 只保留最后一个的数据 但是可以实现定向查询 所以留着
+	// for _, item := range newlist.Items {
+	// 	clusterList["displayName"] = item.Annotations["displayName"]
+	// 	clusterList["city"] = item.Annotations["city"]
+	// 	clusterList["clusterStatus"] = item.Annotations["clusterStatus"]
+	// 	clusterList["clusterVersion"] = item.Annotations["clusterVersion"]
+	// 	clusterList["district"] = item.Annotations["district"]
+	// 	clusterList["id"] = item.Annotations["id"]
+	// }
+	returnData.Data["items"] = clusterList
 	r.JSON(200, returnData)
 	return
 }
