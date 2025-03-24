@@ -53,7 +53,9 @@ func Get(r *gin.Context) {
 		returnData.Status = 200
 		returnData.Message = "获取集群配置信息成功"
 		returnData.Data = make(map[string]interface{})
-		returnData.Data["item"] = ClusterSecret
+		clusterInfoDetail := ClusterSecret.Annotations
+		clusterInfoDetail["kubeconfig"] = string(ClusterSecret.Data["kubeconfig"])
+		returnData.Data["item"] = clusterInfoDetail
 	}
 	r.JSON(200, returnData)
 	return
