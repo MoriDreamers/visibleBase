@@ -41,7 +41,22 @@ func Delete(r *gin.Context) {
 }
 func Get(r *gin.Context) {
 	logs.Info(nil, "获取集群配置信息")
-
+	cluserId := r.Query("clusterId")
+	returnData := config.NewReturnData()
+	ClusterSecret, err := config.InClusterClinetSet.CoreV1().Secrets(config.MetaDataNameSpace).Get(context.TODO(), cluserId, metav1.GetOptions{})
+	if err != nil {
+		logs.Error(map[string]interface{}{"集群ID": cluserId, "msg=": err.Error()}, "获取集群配置信息失败")
+		returnData.Status = 401
+		returnData.Message = "获取集群配置信息失败"
+	} else {
+		logs.Error(map[string]interface{}{"集群ID": cluserId}, "获取集群配置信息成功")
+		returnData.Status = 200
+		returnData.Message = "获取集群配置信息成功"
+		returnData.Data = make(map[string]interface{})
+		returnData.Data["item"] = ClusterSecret
+	}
+	r.JSON(200, returnData)
+	return
 }
 func List(r *gin.Context) {
 	logs.Info(nil, "获取集群列表")
