@@ -14,8 +14,8 @@ type namespaceInfo struct {
 
 type namespaceStatus struct {
 	namespaceInfo
-	namespaceStatus  string `json:"namespaceStatus"`  //namespace状态
-	namespaceVersion string `json:"namespaceVersion"` //namespace版本
+	NamespaceStatus  string `json:"namespaceStatus"`  //namespace状态
+	NamespaceVersion string `json:"namespaceVersion"` //namespace版本
 }
 
 type namespaceConfig struct {
@@ -40,7 +40,7 @@ func (c *namespaceConfig) checknamespaceStatus() (namespaceStatus, error) {
 		return namespacestatus, err
 	}
 	namespaceVersion := severVersion.String()
-	namespacestatus.namespaceStatus = "Active"
-	namespacestatus.namespaceVersion = namespaceVersion
+	namespacestatus.NamespaceStatus = "Active"
+	namespacestatus.NamespaceVersion = namespaceVersion
 	return namespacestatus, nil
 }

@@ -33,7 +33,7 @@ func Delete(r *gin.Context) {
 		logs.Error(map[string]interface{}{"namespaceID": namespaceId, "msg=": err.Error()}, "删除namespace失败")
 		return
 	}
-	logs.Error(map[string]interface{}{"namespaceID": namespaceId}, "删除namespace成功")
+	logs.Info(map[string]interface{}{"namespaceID": namespaceId}, "删除namespace成功")
 	returnData.Status = 200
 	returnData.Message = "删除namespace成功"
 	r.JSON(200, returnData)

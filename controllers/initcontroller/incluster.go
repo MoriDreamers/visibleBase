@@ -48,6 +48,8 @@ func metadataInit() {
 		//已存在namespace
 		logs.Info(map[string]interface{}{"clusterVersion": inClusterVersion}, "元数据命名空间已存在,集群版本已打印")
 	}
+	// 初始化clusterkubeconfig
+	config.CluserKubeConfigPath = make(map[string]string)
 
 	// 获取所有 Pod
 	clientset.AppsV1()
