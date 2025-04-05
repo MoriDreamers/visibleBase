@@ -50,7 +50,7 @@ func Create(r *gin.Context) {
 	}
 	var namespace corev1.Namespace
 	//clientset的Create会自动读取namespace.Name的值 然后创建一个namespace
-	namespace.Name = basicInfo.Namespace
+	namespace.Name = basicInfo.Name
 	_, err = clientset.CoreV1().Namespaces().Create(context.TODO(), &namespace, metav1.CreateOptions{})
 	if err != nil {
 		msg := "创建namespace失败" + err.Error()
