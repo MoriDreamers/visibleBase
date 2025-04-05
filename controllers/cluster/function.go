@@ -36,7 +36,7 @@ func Delete(r *gin.Context) {
 	logs.Info(map[string]interface{}{"集群ID": clusterId}, "删除集群成功")
 	returnData.Status = 200
 	returnData.Message = "删除集群成功"
-	delete(config.CluserKubeConfigPath, clusterId)
+	delete(config.CluserKubeConfig, clusterId)
 	//调试用 fmt.Println("deldeteTest", config.CluserKubeConfigPath)
 	r.JSON(200, returnData)
 	return

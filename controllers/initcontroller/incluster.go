@@ -49,7 +49,7 @@ func metadataInit() {
 		logs.Info(map[string]interface{}{"clusterVersion": inClusterVersion}, "元数据命名空间已存在,集群版本已打印")
 	}
 	// 初始化clusterkubeconfig
-	config.CluserKubeConfigPath = make(map[string]string)
+	config.CluserKubeConfig = make(map[string]string)
 	//这是一个解耦的筛选器 用于在下面进行筛选我们的元数据
 	listOptions := metav1.ListOptions{
 		LabelSelector: "k8s.moridreamers.com/cluster.metadata=true",
@@ -59,9 +59,10 @@ func metadataInit() {
 	for _, secret := range secretsList.Items {
 		clusterId := secret.Name
 		kubeconfig := secret.Data["kubeconfig"]
-		config.CluserKubeConfigPath[clusterId] = string(kubeconfig)
+		config.CluserKubeConfig[clusterId] = string(kubeconfig)
+
 	}
-	//调试用 fmt.Print("clusterIDtEST:", config.CluserKubeConfigPath)
+	fmt.Print("clusterIDtEST:", config.CluserKubeConfig)
 	// 获取所有 Pod
 	clientset.AppsV1()
 	clientset.NetworkingV1()

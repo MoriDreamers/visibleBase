@@ -1,5 +1,12 @@
 package namespace
 
+type namespaceInfo struct {
+	CluserId  string `json:"ClusterId"`
+	Namespace string `json:"namespace"`
+	Name      string `json:"name"`
+}
+
+/*
 import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -44,3 +51,4 @@ func (c *namespaceConfig) checknamespaceStatus() (namespaceStatus, error) {
 	namespacestatus.NamespaceVersion = namespaceVersion
 	return namespacestatus, nil
 }
+*/

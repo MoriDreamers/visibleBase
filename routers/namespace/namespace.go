@@ -11,7 +11,7 @@ func update(namespaceGroup *gin.RouterGroup) {
 	namespaceGroup.POST("/update", namespace.Update)
 }
 func add(namespaceGroup *gin.RouterGroup) {
-	namespaceGroup.POST("/add", namespace.Add)
+	namespaceGroup.POST("/add", namespace.Create)
 }
 func delete(namespaceGroup *gin.RouterGroup) {
 	namespaceGroup.GET("/delete", namespace.Delete)
