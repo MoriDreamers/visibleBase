@@ -83,6 +83,7 @@ func UpdateAndAdd(r *gin.Context, method string) {
 			return
 		}
 	}
+	config.CluserKubeConfigPath[clusterConfig.Id] = clusterConfig.Kubeconfig
 	logs.Info(map[string]interface{}{"集群名称": clusterConfig.DisplayName, "集群ID": clusterConfig.Id}, "集群"+msgValue+"成功")
 	returnData.Status = 200
 	returnData.Message = "集群" + msgValue + "成功"

@@ -33,9 +33,11 @@ func Delete(r *gin.Context) {
 		logs.Error(map[string]interface{}{"集群ID": clusterId, "msg=": err.Error()}, "删除集群失败")
 		return
 	}
-	logs.Error(map[string]interface{}{"集群ID": clusterId}, "删除集群成功")
+	logs.Info(map[string]interface{}{"集群ID": clusterId}, "删除集群成功")
 	returnData.Status = 200
 	returnData.Message = "删除集群成功"
+	delete(config.CluserKubeConfigPath, clusterId)
+	//调试用 fmt.Println("deldeteTest", config.CluserKubeConfigPath)
 	r.JSON(200, returnData)
 	return
 }
@@ -64,6 +66,7 @@ func List(r *gin.Context) {
 	logs.Info(nil, "获取集群列表")
 	//根据之前打的标签进行一下筛选 避免把其他东西也返回进来
 	listOptions := metav1.ListOptions{
+		//这是一个解耦的筛选器 用于在下面进行筛选我们的元数据
 		LabelSelector: "k8s.moridreamers.com/cluster.metadata=true",
 	}
 	returnData := config.NewReturnData()

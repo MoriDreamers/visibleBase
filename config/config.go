@@ -42,7 +42,7 @@ var (
 	MetaDataNameSpace       string                //元数据存储namespace
 	InclusterKubeConfigPath string                //incluster kubeconfig路径
 	InClusterClinetSet      *kubernetes.Clientset //clientgo客户端工具
-	CluserKubeConfigPath    map[string]string     //cluster kubeconfig路径
+	CluserKubeConfigPath    map[string]string     //cluster kubeconfig
 )
 
 func initLogConfig(logLevel string) {
