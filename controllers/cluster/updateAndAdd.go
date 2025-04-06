@@ -2,7 +2,6 @@ package cluster
 
 import (
 	"context"
-	"fmt"
 	"visibleBase/config"
 	"visibleBase/utils"
 	"visibleBase/utils/logs"
@@ -86,7 +85,8 @@ func UpdateAndAdd(r *gin.Context, method string) {
 	}
 	//将kuconfig文件内容保存到全局变量中，用于后续的获取kubecofig
 	config.CluserKubeConfig[clusterConfig.Id] = clusterConfig.Kubeconfig
-	fmt.Println(config.CluserKubeConfig)
+
+	//调试用 fmt.Println(config.CluserKubeConfig)
 	returnData.Status = 200
 	returnData.Message = "集群" + msgValue + "成功"
 	r.JSON(200, returnData)
