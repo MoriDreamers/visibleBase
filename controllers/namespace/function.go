@@ -1,12 +1,7 @@
 package namespace
 
 import (
-	"context"
-	"visibleBase/config"
-	"visibleBase/utils/logs"
-
 	"github.com/gin-gonic/gin"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func Add(r *gin.Context) {
@@ -17,7 +12,7 @@ func Update(r *gin.Context) {
 	UpdateAndAdd(r, "update")
 }
 
-func Delete(r *gin.Context) {
+/*func Delete(r *gin.Context) {
 	logs.Info(nil, "删除namespace")
 	//接受参数
 	namespaceId := r.Query("namespaceId")
@@ -100,3 +95,4 @@ func List(r *gin.Context) {
 	r.JSON(200, returnData)
 	return
 }
+*/
