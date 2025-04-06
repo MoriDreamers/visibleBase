@@ -62,7 +62,7 @@ func metadataInit() {
 		config.CluserKubeConfig[clusterId] = string(kubeconfig)
 
 	}
-	fmt.Print("clusterIDtEST:", config.CluserKubeConfig)
+	//调试用 fmt.Print("clusterIDtEST:", config.CluserKubeConfig)
 	// 获取所有 Pod
 	clientset.AppsV1()
 	clientset.NetworkingV1()

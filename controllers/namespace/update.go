@@ -2,6 +2,7 @@ package namespace
 
 import (
 	"context"
+	"encoding/json"
 	"visibleBase/config"
 	"visibleBase/controllers"
 	"visibleBase/utils/logs"
@@ -13,9 +14,8 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-func Create(r *gin.Context) {
-	logs.Info(nil, "添加namespace")
-
+func Update(r *gin.Context) {
+	logs.Info(nil, "更新namespace")
 	basicInfo := controllers.Basicinfo{} //初始化基础信息
 	returnData := config.NewReturnData() //初始化返回数据
 
@@ -46,12 +46,29 @@ func Create(r *gin.Context) {
 		r.JSON(200, returnData)
 		return
 	}
-	var namespace corev1.Namespace
-	//clientset的Create会自动读取namespace.Name的值 然后创建一个namespace
-	namespace.Name = basicInfo.Name
-	_, err = clientset.CoreV1().Namespaces().Create(context.TODO(), &namespace, metav1.CreateOptions{})
+
+	// 将 item 转换为 JSON 再反序列化为 Namespace
+	itemJSON, err := json.Marshal(basicInfo.Item)
 	if err != nil {
-		msg := "创建namespace失败" + err.Error()
+		msg := "转换数据失败: " + err.Error()
+		returnData.Status = 400
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	}
+
+	var namespace corev1.Namespace
+
+	if err1 := json.Unmarshal(itemJSON, &namespace); err != nil {
+		msg := "解析 Namespace 数据失败: " + err1.Error()
+		returnData.Status = 400
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	}
+	_, err = clientset.CoreV1().Namespaces().Update(context.TODO(), &namespace, metav1.UpdateOptions{})
+	if err != nil {
+		msg := "更新namespace失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 		r.JSON(200, returnData)
@@ -59,6 +76,6 @@ func Create(r *gin.Context) {
 	}
 	//返回数据
 	returnData.Status = 200
-	returnData.Message = "创建namespace成功"
+	returnData.Message = "更新namespace成功"
 	r.JSON(200, returnData)
 }

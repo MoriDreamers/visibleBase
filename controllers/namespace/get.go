@@ -48,7 +48,7 @@ func Get(r *gin.Context) {
 	} else {
 		returnData.Status = 200
 		returnData.Message = "获取namespace详情成功"
-		returnData.Data["namespaceList"] = namespaceInfo
+		returnData.Data["item"] = namespaceInfo
 		r.JSON(200, returnData)
 	}
 }
