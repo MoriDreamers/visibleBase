@@ -18,6 +18,16 @@ func Delete(r *gin.Context) {
 	returnData := config.NewReturnData() //初始化返回数据
 	basicInfo.Name = r.Query("name")
 	basicInfo.CluserId = r.Query("clusterId")
+	protectedNamespace := []string{"kube-system", "kube-public", "kube-node-lease"} //保护的namespace
+	for _, namespace := range protectedNamespace {
+		if basicInfo.Name == namespace {
+			msg := "保护的namespace不能删除"
+			returnData.Status = 401
+			returnData.Message = msg
+			r.JSON(200, returnData)
+			return
+		}
+	}
 	kubeconfig := config.CluserKubeConfig[basicInfo.CluserId]
 	restConfig, err := clientcmd.RESTConfigFromKubeConfig([]byte(kubeconfig))
 	if err != nil {
