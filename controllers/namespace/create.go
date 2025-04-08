@@ -14,7 +14,7 @@ import (
 func Create(r *gin.Context) {
 	logs.Info(nil, "添加namespace")
 	returnData := config.NewReturnData()
-	clientset, basicInfo, err := controllers.Basicinint(r)
+	clientset, basicInfo, err := controllers.Basicinit(r)
 	if err != nil {
 		msg := err.Error()
 		returnData.Status = 401
