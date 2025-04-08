@@ -5,6 +5,7 @@ import (
 	"visibleBase/routers/auth"
 	clusterRouter "visibleBase/routers/cluster"
 	namespaceRouter "visibleBase/routers/namespace"
+	podRouter "visibleBase/routers/pod"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,4 +16,5 @@ func RegisterRouters(r *gin.Engine) {
 	auth.RegisterSubRouter(apiGroup)
 	clusterRouter.RegisterSubRouter(apiGroup)
 	namespaceRouter.RegisterSubRouter(apiGroup)
+	podRouter.RegisterSubRouter(apiGroup)
 }

@@ -13,8 +13,15 @@ import (
 func Delete(r *gin.Context) {
 	logs.Info(nil, "删除namespace")
 
-	returnData := config.NewReturnData()                                            //初始化返回数据
-	clientset, basicInfo, err := controllers.Basicinit(r)                           //初始化
+	returnData := config.NewReturnData() //初始化返回数据
+	clientset, basicInfo, err := controllers.Basicinit(r, nil)
+	if err != nil {
+		msg := err.Error()
+		returnData.Status = 401
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	} //初始化
 	protectedNamespace := []string{"kube-system", "kube-public", "kube-node-lease"} //保护的namespace
 	for _, namespace := range protectedNamespace {
 		if basicInfo.Name == namespace {

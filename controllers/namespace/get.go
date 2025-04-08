@@ -15,7 +15,14 @@ func Get(r *gin.Context) {
 	logs.Info(nil, "获取namespace列表")
 	returnData := config.NewReturnData()
 	returnData.Data = make(map[string]interface{})
-	clientset, basicInfo, err := controllers.Basicinit(r) //初始化
+	clientset, basicInfo, err := controllers.Basicinit(r, nil)
+	if err != nil {
+		msg := err.Error()
+		returnData.Status = 401
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	}
 	//获取列表
 	var namespace corev1.Namespace
 	namespace.Name = basicInfo.Name

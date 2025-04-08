@@ -19,8 +19,9 @@ type Basicinfo struct {
 }
 
 // 这个函数是用来初始化clientset的，因为我们是多集群的，所以需要根据不同的集群创建不同的clientgo客户端工具
-func Basicinit(r *gin.Context) (clientset *kubernetes.Clientset, basicInfo Basicinfo, err error) {
+func Basicinit(r *gin.Context, item interface{}) (clientset *kubernetes.Clientset, basicInfo Basicinfo, err error) {
 	basicInfo = Basicinfo{} //初始化基础信息
+	basicInfo.Item = item   //初始化配置文件
 	if r.Request.Method == "GET" {
 		//如果是GET请求，就从查询参数中获取基本信息，否则就从请求体中获取基本信息
 		basicInfo.CluserId = r.Query("clusterId")
