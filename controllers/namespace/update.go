@@ -59,7 +59,7 @@ func Update(r *gin.Context) {
 
 	var namespace corev1.Namespace
 
-	if err1 := json.Unmarshal(itemJSON, &namespace); err != nil {
+	if err1 := json.Unmarshal(itemJSON, &namespace); err1 != nil {
 		msg := "解析 Namespace 数据失败: " + err1.Error()
 		returnData.Status = 400
 		returnData.Message = msg
