@@ -8,6 +8,7 @@ import (
 	deamomsetRouter "visibleBase/routers/deamonset"
 	deploymentRouter "visibleBase/routers/deployment"
 	namespaceRouter "visibleBase/routers/namespace"
+	nodeRouter "visibleBase/routers/node"
 	podRouter "visibleBase/routers/pod"
 	replicasetRouter "visibleBase/routers/replicaset"
 	statefulsetRouter "visibleBase/routers/statefulset"
@@ -27,4 +28,5 @@ func RegisterRouters(r *gin.Engine) {
 	deamomsetRouter.RegisterSubRouter(apiGroup)
 	cronjobRouter.RegisterSubRouter(apiGroup)
 	replicasetRouter.RegisterSubRouter(apiGroup)
+	nodeRouter.RegisterSubRouter(apiGroup)
 }
