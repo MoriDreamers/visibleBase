@@ -28,7 +28,7 @@ func Delete(r *gin.Context) {
 	err = clientset.AppsV1().Deployments(basicInfo.Namespace).Delete(context.TODO(), basicInfo.Name, metav1.DeleteOptions{})
 
 	if err != nil {
-		msg := "有一部分deployment删除失败，请转到查询列表里手动查看"
+		msg := "deployment删除失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 		r.JSON(200, returnData)

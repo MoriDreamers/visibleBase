@@ -11,7 +11,7 @@ import (
 )
 
 func List(r *gin.Context) {
-	logs.Info(nil, "获取namespace列表")
+	logs.Info(nil, "获取deployment列表")
 	returnData := config.NewReturnData()
 	returnData.Data = make(map[string]interface{})
 	returnData.Data = make(map[string]interface{})
@@ -24,18 +24,18 @@ func List(r *gin.Context) {
 		return
 	}
 	//获取列表
-	List, err := clientset.CoreV1().Pods(basicInfo.Namespace).List(context.TODO(), metav1.ListOptions{})
+	List, err := clientset.AppsV1().Deployments(basicInfo.Namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
-		msg := "获取namespace列表失败" + err.Error()
+		msg := "获取deploymente列表失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 	} else {
 		returnData.Status = 200
-		returnData.Message = "获取namespace列表成功"
+		returnData.Message = "获取deploymente列表成功"
 		/*
-			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见namespace中的函数注释
+			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见deployment中的函数注释
 		*/
-		returnData.Data["namespaceList"] = List.Items
+		returnData.Data["deploymentList"] = List.Items
 		r.JSON(200, returnData)
 	}
 }

@@ -11,7 +11,7 @@ import (
 )
 
 func Get(r *gin.Context) {
-	logs.Info(nil, "获取namespace列表")
+	logs.Info(nil, "获取deployment列表")
 	returnData := config.NewReturnData()
 	returnData.Data = make(map[string]interface{})
 	clientset, basicInfo, err := controllers.Basicinit(r, nil)
@@ -23,16 +23,16 @@ func Get(r *gin.Context) {
 		return
 	}
 	//获取列表
-	podInfo, err := clientset.CoreV1().Pods(basicInfo.Namespace).Get(context.TODO(), basicInfo.Name, metav1.GetOptions{})
+	deploymentInfo, err := clientset.AppsV1().Deployments(basicInfo.Namespace).Get(context.TODO(), basicInfo.Name, metav1.GetOptions{})
 	if err != nil {
-		msg := "获取pod详情失败" + err.Error()
+		msg := "获取deployment详情失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 		r.JSON(200, returnData)
 	} else {
 		returnData.Status = 200
-		returnData.Message = "获取pod详情成功"
-		returnData.Data["item"] = podInfo
+		returnData.Message = "获取deployment详情成功"
+		returnData.Data["item"] = deploymentInfo
 		r.JSON(200, returnData)
 	}
 }
