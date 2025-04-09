@@ -12,7 +12,7 @@ import (
 )
 
 func Create(r *gin.Context) {
-	logs.Info(nil, "pod")
+	logs.Info(nil, "创建pod")
 	var pod corev1.Pod
 	returnData := config.NewReturnData()
 	clientset, basicInfo, err := controllers.Basicinit(r, &pod)

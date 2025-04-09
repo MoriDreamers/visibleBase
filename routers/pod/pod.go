@@ -14,7 +14,7 @@ func add(podGroup *gin.RouterGroup) {
 	podGroup.POST("/add", pod.Create)
 }
 func delete(podGroup *gin.RouterGroup) {
-	podGroup.GET("/delete", pod.Delete)
+	podGroup.POST("/delete", pod.Delete)
 }
 
 func get(podGroup *gin.RouterGroup) {

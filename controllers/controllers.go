@@ -12,10 +12,11 @@ import (
 //大伙都能经常用到的玩意都在这
 
 type Basicinfo struct {
-	CluserId  string      `json:"clusterId" ` //form : "clusterId" 这个是用来接收前端传过来的get参数的
-	Namespace string      `json:"namespace" `
-	Name      string      `json:"name" `
-	Item      interface{} `json:"item"` // 用于存储一些配置文件
+	CluserId   string      `json:"clusterId" ` //form : "clusterId" 这个是用来接收前端传过来的get参数的
+	Namespace  string      `json:"namespace" `
+	Name       string      `json:"name" `
+	Item       interface{} `json:"item"` // 用于存储一些配置文件
+	DeleteList []string    `json:"deleteList"`
 }
 
 // 这个函数是用来初始化clientset的，因为我们是多集群的，所以需要根据不同的集群创建不同的clientgo客户端工具
