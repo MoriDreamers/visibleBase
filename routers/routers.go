@@ -4,6 +4,7 @@ package routers
 import (
 	"visibleBase/routers/auth"
 	clusterRouter "visibleBase/routers/cluster"
+	deploymentRouter "visibleBase/routers/deployment"
 	namespaceRouter "visibleBase/routers/namespace"
 	podRouter "visibleBase/routers/pod"
 
@@ -17,4 +18,5 @@ func RegisterRouters(r *gin.Engine) {
 	clusterRouter.RegisterSubRouter(apiGroup)
 	namespaceRouter.RegisterSubRouter(apiGroup)
 	podRouter.RegisterSubRouter(apiGroup)
+	deploymentRouter.RegisterSubRouter(apiGroup)
 }
