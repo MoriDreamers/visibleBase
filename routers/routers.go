@@ -7,6 +7,7 @@ import (
 	deploymentRouter "visibleBase/routers/deployment"
 	namespaceRouter "visibleBase/routers/namespace"
 	podRouter "visibleBase/routers/pod"
+	statefulsetRouter "visibleBase/routers/statefulset"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,4 +20,5 @@ func RegisterRouters(r *gin.Engine) {
 	namespaceRouter.RegisterSubRouter(apiGroup)
 	podRouter.RegisterSubRouter(apiGroup)
 	deploymentRouter.RegisterSubRouter(apiGroup)
+	statefulsetRouter.RegisterSubRouter(apiGroup)
 }

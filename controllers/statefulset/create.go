@@ -1,4 +1,4 @@
-package pod
+package statefulset
 
 import (
 	"context"
@@ -7,15 +7,15 @@ import (
 	"visibleBase/utils/logs"
 
 	"github.com/gin-gonic/gin"
-	corev1 "k8s.io/api/core/v1"
+	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func Create(r *gin.Context) {
-	logs.Info(nil, "创建pod")
-	var pod corev1.Pod
+	logs.Info(nil, "创建statefulset")
+	var statefulset appsv1.StatefulSet
 	returnData := config.NewReturnData()
-	clientset, basicInfo, err := controllers.Basicinit(r, &pod)
+	clientset, basicInfo, err := controllers.Basicinit(r, &statefulset)
 	if err != nil {
 		msg := err.Error()
 		returnData.Status = 401
@@ -24,10 +24,10 @@ func Create(r *gin.Context) {
 		return
 	}
 
-	_, err = clientset.CoreV1().Pods(basicInfo.Namespace).Create(context.TODO(), &pod, metav1.CreateOptions{})
+	_, err = clientset.AppsV1().StatefulSets(basicInfo.Namespace).Create(context.TODO(), &statefulset, metav1.CreateOptions{})
 
 	if err != nil {
-		msg := "创建pod失败" + err.Error()
+		msg := "创建statefulset失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 		r.JSON(200, returnData)
@@ -35,6 +35,6 @@ func Create(r *gin.Context) {
 	}
 	//返回数据
 	returnData.Status = 200
-	returnData.Message = "创建pod成功"
+	returnData.Message = "创建statefulset成功"
 	r.JSON(200, returnData)
 }
