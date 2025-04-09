@@ -23,6 +23,7 @@ type Basicinfo struct {
 func Basicinit(r *gin.Context, item interface{}) (clientset *kubernetes.Clientset, basicInfo Basicinfo, err error) {
 	basicInfo = Basicinfo{} //初始化基础信息
 	basicInfo.Item = item   //初始化配置文件
+
 	if r.Request.Method == "GET" {
 		//如果是GET请求，就从查询参数中获取基本信息，否则就从请求体中获取基本信息
 		basicInfo.CluserId = r.Query("clusterId")
@@ -37,7 +38,9 @@ func Basicinit(r *gin.Context, item interface{}) (clientset *kubernetes.Clientse
 
 		return nil, basicInfo, errors.New(msg) // 返回错误和基本信息，以便在调用方处理错误和基本信息
 	}
-
+	if basicInfo.Namespace == "" {
+		basicInfo.Namespace = "default" //如果没有传namespace参数，就默认给一个default
+	}
 	// 前端传一个id名 通过这个id名在全局变量中获取kubeconfig
 	kubeconfig := config.CluserKubeConfig[basicInfo.CluserId]
 	//转换一下kubeconfig 因为这个是string类型的 所以需要转换一下
