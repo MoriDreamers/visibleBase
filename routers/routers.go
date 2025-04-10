@@ -11,6 +11,7 @@ import (
 	ingressRouter "visibleBase/routers/ingress"
 	namespaceRouter "visibleBase/routers/namespace"
 	nodeRouter "visibleBase/routers/node"
+	persistentvolumeGroup "visibleBase/routers/persistentvolume"
 	podRouter "visibleBase/routers/pod"
 	replicasetRouter "visibleBase/routers/replicaset"
 	secretRouter "visibleBase/routers/secret"
@@ -37,4 +38,5 @@ func RegisterRouters(r *gin.Engine) {
 	ingressRouter.RegisterSubRouter(apiGroup)
 	configmapRouter.RegisterSubRouter(apiGroup)
 	secretRouter.RegisterSubRouter(apiGroup)
+	persistentvolumeGroup.RegisterSubRouter(apiGroup)
 }
