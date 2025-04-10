@@ -92,7 +92,7 @@
    - 端口配置同上，默认为8080
 6. 一些逻辑介绍：
     - routers的逻辑为： 以ns为例，首先在ns下定义一堆路由方法（/add...）调用根目录下的controllers中的同名文件夹下的处理函数，将其分到一个namespaceGroup（/namespace）组里，在上级目录下的routes.go中导入包，同时再次注册到apiGroup（/api）组，最后在mian.go中注册apiGroup组，完成路由的注册
-  - main.go中对总路由进行了注册，同时调用了*_ "visibleBase/controllers/initcontroller"*，这会自动执行包中的函数，实现了对项目核心组件clientgo的初始化
+    - main.go中对总路由进行了注册，同时调用了*_ "visibleBase/controllers/initcontroller"*，这会自动执行包中的函数，实现了对项目核心组件clientgo的初始化
 7. 注意事项：
    - *使用了gin jwt/v5 logrus*
    - *main.go中本地调试时取消了跨域限制，请不要在生产环境使用，同时为了便于测试更改了JWT过期时间几乎永久，请注意*
