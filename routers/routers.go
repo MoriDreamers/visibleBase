@@ -11,6 +11,7 @@ import (
 	nodeRouter "visibleBase/routers/node"
 	podRouter "visibleBase/routers/pod"
 	replicasetRouter "visibleBase/routers/replicaset"
+	serviceRouter "visibleBase/routers/service"
 	statefulsetRouter "visibleBase/routers/statefulset"
 
 	"github.com/gin-gonic/gin"
@@ -29,4 +30,5 @@ func RegisterRouters(r *gin.Engine) {
 	cronjobRouter.RegisterSubRouter(apiGroup)
 	replicasetRouter.RegisterSubRouter(apiGroup)
 	nodeRouter.RegisterSubRouter(apiGroup)
+	serviceRouter.RegisterSubRouter(apiGroup)
 }
