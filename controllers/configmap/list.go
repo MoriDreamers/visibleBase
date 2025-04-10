@@ -26,12 +26,12 @@ func List(r *gin.Context) {
 	//获取列表
 	List, err := clientset.CoreV1().ConfigMaps(basicInfo.Namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
-		msg := "获取configmape列表失败" + err.Error()
+		msg := "获取configmap列表失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 	} else {
 		returnData.Status = 200
-		returnData.Message = "获取configmape列表成功"
+		returnData.Message = "获取configmap列表成功"
 		/*
 			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见configmap中的函数注释
 		*/

@@ -26,12 +26,12 @@ func List(r *gin.Context) {
 	//获取列表
 	List, err := clientset.CoreV1().PersistentVolumes().List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
-		msg := "获取persistentvolume e列表失败" + err.Error()
+		msg := "获取persistentvolume列表失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
 	} else {
 		returnData.Status = 200
-		returnData.Message = "获取persistentvolume e列表成功"
+		returnData.Message = "获取persistentvolume列表成功"
 		/*
 			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见persistentvolume 中的函数注释
 		*/

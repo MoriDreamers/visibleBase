@@ -18,6 +18,7 @@ import (
 	secretRouter "visibleBase/routers/secret"
 	serviceRouter "visibleBase/routers/service"
 	statefulsetRouter "visibleBase/routers/statefulset"
+	storageclassRouter "visibleBase/routers/storageclass"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,4 +42,5 @@ func RegisterRouters(r *gin.Engine) {
 	secretRouter.RegisterSubRouter(apiGroup)
 	persistentvolumeGroup.RegisterSubRouter(apiGroup)
 	persistentvolumeclaimRouter.RegisterSubRouter(apiGroup)
+	storageclassRouter.RegisterSubRouter(apiGroup)
 }

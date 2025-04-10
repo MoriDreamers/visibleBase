@@ -1,4 +1,4 @@
-package daemonset
+package storageclass
 
 import (
 	"context"
@@ -10,10 +10,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func List(r *gin.Context) {
-	logs.Info(nil, "获取daemonset列表")
+func Get(r *gin.Context) {
+	logs.Info(nil, "获取storageclass 列表")
 	returnData := config.NewReturnData()
-	returnData.Data = make(map[string]interface{})
 	returnData.Data = make(map[string]interface{})
 	clientset, basicInfo, err := controllers.Basicinit(r, nil)
 	if err != nil {
@@ -24,18 +23,16 @@ func List(r *gin.Context) {
 		return
 	}
 	//获取列表
-	List, err := clientset.AppsV1().DaemonSets(basicInfo.Namespace).List(context.TODO(), metav1.ListOptions{})
+	storageclassInfo, err := clientset.StorageV1().StorageClasses().Get(context.TODO(), basicInfo.Name, metav1.GetOptions{})
 	if err != nil {
-		msg := "获取daemonset列表失败" + err.Error()
+		msg := "获取storageclass 详情失败" + err.Error()
 		returnData.Status = 401
 		returnData.Message = msg
+		r.JSON(200, returnData)
 	} else {
 		returnData.Status = 200
-		returnData.Message = "获取daemonset列表成功"
-		/*
-			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见daemonset中的函数注释
-		*/
-		returnData.Data["daemonsetList"] = List.Items
+		returnData.Message = "获取storageclass 详情成功"
+		returnData.Data["item"] = storageclassInfo
 		r.JSON(200, returnData)
 	}
 }
