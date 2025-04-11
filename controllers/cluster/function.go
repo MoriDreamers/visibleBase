@@ -20,7 +20,7 @@ func Update(r *gin.Context) {
 func Delete(r *gin.Context) {
 	logs.Info(nil, "删除集群")
 	//接受参数
-	clusterId := r.Query("id")
+	clusterId := r.Query("clusterId")
 	returnData := config.NewReturnData()
 	//删除
 	err := config.InClusterClinetSet.CoreV1().Secrets(config.MetaDataNameSpace).Delete(context.TODO(), clusterId, metav1.DeleteOptions{})
