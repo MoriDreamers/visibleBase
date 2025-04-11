@@ -20,7 +20,7 @@ func JWTAuth(r *gin.Context) {
 	// 验证token
 	returnData := config.NewReturnData()
 	tokenString := r.Request.Header.Get("Authorization")
-	returnData.Status = 401
+	returnData.Status = 400
 	returnData.Message = "请求未携带TOKEN，请登录后重试"
 	if tokenString == "" {
 		r.JSON(200, returnData)
@@ -38,7 +38,7 @@ func JWTAuth(r *gin.Context) {
 				"message": "Token验证不通过",
 			})
 		r.Abort() */
-	returnData.Status = 401
+	returnData.Status = 400
 	returnData.Message = "TOKEN验证不通过"
 	if err != nil {
 		r.JSON(200, returnData)
