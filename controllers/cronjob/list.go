@@ -35,7 +35,7 @@ func List(r *gin.Context) {
 		/*
 			这里可以优化一下 因为我们只需要返回名称 所以可以直接返回一个字符串数组 详见cronjob中的函数注释
 		*/
-		returnData.Data["cronjobList"] = List.Items
+		returnData.Data["items"] = List.Items
 		r.JSON(200, returnData)
 	}
 }

@@ -39,7 +39,7 @@ func List(r *gin.Context) {
 			}
 			returnData.Data["namespaceList"] = nsNames
 		*/
-		returnData.Data["namespaceList"] = namspaceList.Items
+		returnData.Data["items"] = namspaceList.Items
 		r.JSON(200, returnData)
 	}
 }
