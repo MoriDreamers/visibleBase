@@ -33,7 +33,7 @@ func Update(r *gin.Context) {
 		return
 	}
 	msg := "更新secret成功"
-	returnData.Status = 401
+	returnData.Status = 200
 	returnData.Message = msg
 	r.JSON(200, returnData)
 	return
