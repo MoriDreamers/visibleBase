@@ -3,6 +3,7 @@ package node
 import (
 	"context"
 	"visibleBase/config"
+	"visibleBase/controllers"
 	"visibleBase/utils/logs"
 
 	"github.com/gin-gonic/gin"
@@ -14,18 +15,16 @@ func List(r *gin.Context) {
 	returnData := config.NewReturnData()
 	returnData.Data = make(map[string]interface{})
 	returnData.Data = make(map[string]interface{})
-	/*
-		clientset, _, err := controllers.Basicinit(r, nil)
-		if err != nil {
-			msg := err.Error()
-			returnData.Status = 401
-			returnData.Message = msg
-			r.JSON(200, returnData)
-			return
-		}
-	*/
+	clientset, _, err := controllers.Basicinit(r, nil)
+	if err != nil {
+		msg := err.Error()
+		returnData.Status = 401
+		returnData.Message = msg
+		r.JSON(200, returnData)
+		return
+	}
 	//获取列表
-	List, err := config.InClusterClinetSet.CoreV1().Nodes().List(context.TODO(), metav1.ListOptions{})
+	List, err := clientset.CoreV1().Nodes().List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		msg := "获取node列表失败" + err.Error()
 		returnData.Status = 401
