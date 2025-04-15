@@ -23,17 +23,30 @@ func Delete(r *gin.Context) {
 		r.JSON(200, returnData)
 		return
 	}
-	//初始化
-	for _, name := range basicInfo.DeleteList {
-		err = clientset.CoreV1().Pods(basicInfo.Namespace).Delete(context.TODO(), name, metav1.DeleteOptions{})
-	}
 
-	if err != nil {
-		msg := "有一部分POD删除失败，请转到查询列表里手动查看"
-		returnData.Status = 401
-		returnData.Message = msg
-		r.JSON(200, returnData)
-		return
+	if basicInfo.DeleteList == nil {
+		err = clientset.CoreV1().Pods(basicInfo.Namespace).Delete(context.TODO(), basicInfo.Name, metav1.DeleteOptions{})
+		if err != nil {
+			msg := "POD删除失败" + err.Error()
+			returnData.Status = 401
+			returnData.Message = msg
+			r.JSON(200, returnData)
+			return
+		}
+	} else {
+		//初始化
+		for _, name := range basicInfo.DeleteList {
+			err = clientset.CoreV1().Pods(basicInfo.Namespace).Delete(context.TODO(), name, metav1.DeleteOptions{})
+		}
+
+		if err != nil {
+			msg := "有一部分POD删除失败，请转到查询列表里手动查看"
+			returnData.Status = 401
+			returnData.Message = msg
+			r.JSON(200, returnData)
+			return
+		}
+
 	}
 	//返回数据
 	returnData.Status = 200
